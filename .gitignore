@@ -1,0 +1,20 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Compiled binary
+build
+
+# Dependency directories
+node_modules
+platforms
+plugins
+
+# misc
+/.sass-cache
+
+# ignore map and js files
+**/*.map
+src/app/**/*.js
+src/app/**/*.map
