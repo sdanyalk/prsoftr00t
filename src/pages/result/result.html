@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Result</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <div *ngFor="let match of matchData; let i = index">
+      <ion-row>
+        <ion-card>
+          <ion-card-header>
+            {{match.team1Name}} vs {{match.team2Name}}
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <ion-label>Winning Team</ion-label>
+                <ion-select [(ngModel)]="fixture[match.matchID]" (ionChange)="selectedTeam(fixture[match.matchID], match.matchID)">
+                  <ion-option value={{match.team1ID}}>{{match.team1Name}}</ion-option>
+                  <ion-option value={{match.team2ID}}>{{match.team2Name}}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+            <button ion-button full (click)="save(match.matchID)">Save</button>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+    </div>
+  </ion-grid>
+</ion-content>
