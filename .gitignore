@@ -18,3 +18,7 @@ plugins
 **/*.map
 src/app/**/*.js
 src/app/**/*.map
+
+#android build
+*.apk
+*.keystore

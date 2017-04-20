@@ -12,7 +12,15 @@
       <ion-row>
         <ion-card>
           <ion-card-header>
-            {{match.team1Name}} vs {{match.team2Name}}
+            <ion-row>
+              <ion-col>
+                <ion-img width="150" height="150" src={{match.team1LogoPath}}></ion-img>
+              </ion-col>
+              <ion-col>
+                <ion-img width="150" height="150" src={{match.team2LogoPath}}></ion-img>
+              </ion-col>
+            </ion-row>
+            <!--{{match.team1Name}} vs {{match.team2Name}}-->
           </ion-card-header>
           <ion-card-content>
             <ion-list>
