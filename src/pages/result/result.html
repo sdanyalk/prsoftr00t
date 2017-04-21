@@ -7,17 +7,23 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-grid>
     <div *ngFor="let match of matchData; let i = index">
       <ion-row>
         <ion-card>
           <ion-card-header>
             <ion-row>
+              {{match.date | date}}
+            </ion-row>
+            <ion-row>
               <ion-col>
-                <ion-img width="150" height="150" src={{match.team1LogoPath}}></ion-img>
+                <img width="150" height="150" [src]=match.team1LogoPath>
               </ion-col>
               <ion-col>
-                <ion-img width="150" height="150" src={{match.team2LogoPath}}></ion-img>
+                <img width="150" height="150" [src]=match.team2LogoPath>
               </ion-col>
             </ion-row>
             <!--{{match.team1Name}} vs {{match.team2Name}}-->

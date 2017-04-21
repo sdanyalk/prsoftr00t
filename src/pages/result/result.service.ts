@@ -7,7 +7,9 @@ import { Winner } from './match.winner';
 
 @Injectable()
 export class MatchService {
-    private baseUrl: string = 'http://nwasoft.duckdns.org:8888/api';
+    private baseUrl: string = 'http://nwasoft.duckdns.org:8080/api';
+    private basePostUrlTest: string = 'http://nwasoft.duckdns.org:8888/api';
+    private basePostUrl: string = 'http://nwasoft.duckdns.org:8090/api';
 
     constructor(private http: Http) {
 
@@ -15,17 +17,18 @@ export class MatchService {
 
     getAll(): Observable<Match[]> {
         return this.http
-            // .get(`${this.baseUrl}/nextMatch`)
-            .get('./assets/data/nextmatch.json')
+            .get(`${this.baseUrl}/nextMatch`)
+            // .get('./assets/data/nextmatch.json')
             .map(this.mapMatchData)
             .catch(this.handleError)
     }
 
     save(winner: Winner): Observable<Response> {
+        console.log('Winner', winner);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         return this.http
-            .post(`${this.baseUrl}/adminUpdateAfterMatch`, JSON.stringify(winner))
+            .post(`${this.basePostUrl}/adminUpdateAfterMatch`, JSON.stringify(winner), options)
             .catch(this.handleError)
     }
 

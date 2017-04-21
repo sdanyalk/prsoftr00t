@@ -19,7 +19,7 @@ export class ResultPage {
     private fixture: any[] = [];
     private matchData: Match[] = [];
     private winningTeam: any[] = [];
-    private winner: Winner;
+    private winner: Winner = { token: '', matchID: -1, winningTeamID: -1 };
     private errorMessage: string;
     private loading: Loading;
 
@@ -28,38 +28,43 @@ export class ResultPage {
         public loadingCtrl: LoadingController,
         public alertCtrl: AlertController,
         private _matchService: MatchService) {
-
-        this.loading = this.loadingCtrl.create({
-            content: 'Hold yo horses moo, this service is damn slow...'
-        });
     }
 
     ngOnInit() {
-        this.loading.present();
+        this.getAll();
+    }
+
+    getAll() {
+        this.presentLoading();
         this._matchService.getAll()
             .subscribe(
-            data => this.matchData = data,
+            data => {
+                this.matchData = data,
+                    console.log('matchData', this.matchData)
+            },
             error => {
                 this.errorMessage = <any>error,
-                    this.showErrorAlert(),
-                    this.loading.dismiss()
+                    this.loading.dismiss(),
+                    this.showErrorAlert()
             },
             () => this.loading.dismiss())
     }
 
     save(matchID: number) {
         console.log('winningTeam', this.winningTeam[matchID]);
+
         this.winner.token = '2653fc5aacecc3a065c502b1aa9793fe';
         this.winner.matchID = matchID;
         this.winner.winningTeamID = this.winningTeam[matchID];
-        this.loading.present();
+
+        this.presentLoading();
         this._matchService.save(this.winner)
             .subscribe(
-            data => { this.showSuccessAlert() },
+            data => { this.showSuccessAlert(), console.log(data) },
             error => {
                 this.errorMessage = <any>error,
-                    this.showErrorAlert(),
-                    this.loading.dismiss()
+                    this.loading.dismiss(),
+                    this.showErrorAlert()
             },
             () => this.loading.dismiss())
     }
@@ -68,6 +73,23 @@ export class ResultPage {
         this.winningTeam[matchID] = teamID;
         console.log('team', teamID);
         console.log('matchID', matchID);
+    }
+
+    doRefresh(refresher) {
+        this.getAll();
+        refresher.complete();
+    }
+
+    presentLoading() {
+        this.loading = this.loadingCtrl.create({
+            content: 'Hold yo horses moo, this service is damn slow...'
+        });
+
+        this.loading.onDidDismiss(() => {
+            console.log('Dismissed loading');
+        });
+
+        this.loading.present();
     }
 
     showErrorAlert() {
