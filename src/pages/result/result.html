@@ -20,13 +20,16 @@
             </ion-row>
             <ion-row>
               <ion-col>
-                <img width="150" height="150" [src]=match.team1LogoPath>
+                <ion-card [ngClass]="{'logoCardActive': logoActive[match.team1ID]}" (press)="pressLogo($event, match.team1ID)">
+                  <img width="150" height="150" [src]=match.team1LogoPath>
+                </ion-card>
               </ion-col>
               <ion-col>
-                <img width="150" height="150" [src]=match.team2LogoPath>
+                <ion-card [ngClass]="{'logoCardActive': logoActive[match.team2ID]}" (press)="pressLogo($event, match.team2ID)">
+                  <img width="150" height="150" [src]=match.team2LogoPath>
+                </ion-card>
               </ion-col>
             </ion-row>
-            <!--{{match.team1Name}} vs {{match.team2Name}}-->
           </ion-card-header>
           <ion-card-content>
             <ion-list>

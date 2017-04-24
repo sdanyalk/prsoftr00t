@@ -17,8 +17,8 @@ export class MatchService {
 
     getAll(): Observable<Match[]> {
         return this.http
-            .get(`${this.baseUrl}/nextMatch`)
-            // .get('./assets/data/nextmatch.json')
+            // .get(`${this.baseUrl}/nextMatch`)
+            .get('./assets/data/nextmatch.json')
             .map(this.mapMatchData)
             .catch(this.handleError)
     }

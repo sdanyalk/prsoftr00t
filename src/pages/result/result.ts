@@ -22,6 +22,7 @@ export class ResultPage {
     private winner: Winner = { token: '', matchID: -1, winningTeamID: -1 };
     private errorMessage: string;
     private loading: Loading;
+    private logoActive: boolean[] = [false];
 
     constructor(
         public navCtrl: NavController,
@@ -78,6 +79,12 @@ export class ResultPage {
     doRefresh(refresher) {
         this.getAll();
         refresher.complete();
+    }
+
+    pressLogo(e, teamID){
+        this.logoActive = [false];
+        this.logoActive[teamID] = true;
+        console.log('logo pressed');
     }
 
     presentLoading() {
