@@ -17,8 +17,8 @@ export class MatchService {
 
     getAll(): Observable<Match[]> {
         return this.http
-            // .get(`${this.baseUrl}/nextMatch`)
-            .get('./assets/data/nextmatch.json')
+            .get(`${this.baseUrl}/nextMatch`)
+            // .get('./assets/data/nextmatch.json')
             .map(this.mapMatchData)
             .catch(this.handleError)
     }
@@ -28,7 +28,8 @@ export class MatchService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         return this.http
-            .post(`${this.basePostUrl}/adminUpdateAfterMatch`, JSON.stringify(winner), options)
+            // .post(`${this.basePostUrl}/adminUpdateAfterMatch`, JSON.stringify(winner), options)
+            .post(`${this.basePostUrlTest}/adminUpdateAfterMatch`, JSON.stringify(winner), options)
             .catch(this.handleError)
     }
 

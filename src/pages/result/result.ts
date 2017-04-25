@@ -16,13 +16,13 @@ import { MatchService } from './result.service';
 })
 
 export class ResultPage {
-    private fixture: any[] = [];
     private matchData: Match[] = [];
     private winningTeam: any[] = [];
     private winner: Winner = { token: '', matchID: -1, winningTeamID: -1 };
     private errorMessage: string;
     private loading: Loading;
     private logoActive: boolean[] = [false];
+    private teamSelected: boolean[] = [false];
 
     constructor(
         public navCtrl: NavController,
@@ -33,6 +33,8 @@ export class ResultPage {
 
     ngOnInit() {
         this.getAll();
+
+        console.log('teamSelected', this.teamSelected);
     }
 
     getAll() {
@@ -70,21 +72,21 @@ export class ResultPage {
             () => this.loading.dismiss())
     }
 
-    selectedTeam(teamID, matchID) {
-        this.winningTeam[matchID] = teamID;
-        console.log('team', teamID);
-        console.log('matchID', matchID);
-    }
-
     doRefresh(refresher) {
         this.getAll();
         refresher.complete();
     }
 
-    pressLogo(e, teamID){
+    pressLogo(e, teamID, matchID){
         this.logoActive = [false];
+        this.teamSelected = [false];
         this.logoActive[teamID] = true;
+        this.teamSelected[matchID] = true;
+        this.winningTeam[matchID] = teamID;
         console.log('logo pressed');
+        console.log('teamSelected', this.teamSelected);
+        console.log('team', teamID);
+        console.log('matchID', matchID);
     }
 
     presentLoading() {
