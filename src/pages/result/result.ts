@@ -56,7 +56,6 @@ export class ResultPage {
     save(matchID: number) {
         console.log('winningTeam', this.winningTeam[matchID]);
 
-        this.winner.token = '2653fc5aacecc3a065c502b1aa9793fe';
         this.winner.matchID = matchID;
         this.winner.winningTeamID = this.winningTeam[matchID];
 

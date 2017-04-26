@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Config</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Game URL</ion-label>
+        <ion-input type="text" [(ngModel)]="gameUrl"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Admin URL</ion-label>
+        <ion-input type="text" [(ngModel)]="adminUrl"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Token</ion-label>
+        <ion-input type="text" [(ngModel)]="token"></ion-input>
+      </ion-item>
+      <ion-item>
+        <button ion-button full (click)="save()">Save</button>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</ion-content>

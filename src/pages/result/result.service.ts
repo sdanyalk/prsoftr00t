@@ -1,36 +1,57 @@
 import { Injectable } from '@angular/core';
+import { Component } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { Match } from './match';
 import { Winner } from './match.winner';
+import { ConfigService } from '../config/config.service';
 
 @Injectable()
 export class MatchService {
-    private baseUrl: string = 'http://nwasoft.duckdns.org:8080/api';
-    private basePostUrlTest: string = 'http://nwasoft.duckdns.org:8888/api';
-    private basePostUrl: string = 'http://nwasoft.duckdns.org:8090/api';
-
-    constructor(private http: Http) {
-
+    constructor(
+        private http: Http,
+        private _configService: ConfigService) {
     }
 
     getAll(): Observable<Match[]> {
-        return this.http
-            .get(`${this.baseUrl}/nextMatch`)
-            // .get('./assets/data/nextmatch.json')
-            .map(this.mapMatchData)
-            .catch(this.handleError)
+        return this.getBaseUrl().flatMap(gameBaseUrl => {
+            console.log('gameBaseUrl in getAll()', gameBaseUrl);
+            return this.http
+                .get(`${gameBaseUrl}/nextMatch`)
+                //.get('./assets/data/nextmatch.json')
+                .map(this.mapMatchData)
+                .catch(this.handleError)
+        })
     }
 
     save(winner: Winner): Observable<Response> {
         console.log('Winner', winner);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        return this.http
-            // .post(`${this.basePostUrl}/adminUpdateAfterMatch`, JSON.stringify(winner), options)
-            .post(`${this.basePostUrlTest}/adminUpdateAfterMatch`, JSON.stringify(winner), options)
-            .catch(this.handleError)
+
+        return this.getAdminUrl().flatMap(adminBaseUrl => {
+            console.log('adminBaseUrl in save()', adminBaseUrl);
+            return this.getToken().flatMap(token => {
+                console.log('token in save()', token);
+                winner.token = token;
+                return this.http
+                    .post(`${adminBaseUrl}/adminUpdateAfterMatch`, JSON.stringify(winner), options)
+                    .catch(this.handleError)
+            })
+        })
+    }
+
+    private getBaseUrl() {
+        return Observable.fromPromise(this._configService.getValue(ConfigService.GAMEURL_KEY));
+    }
+
+    private getAdminUrl() {
+        return Observable.fromPromise(this._configService.getValue(ConfigService.ADMINURL_KEY));
+    }
+
+    private getToken() {
+        return Observable.fromPromise(this._configService.getValue(ConfigService.TOKEN_KEY));
     }
 
     private mapMatchData(response: Response): Match[] {
