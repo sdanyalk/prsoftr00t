@@ -23,11 +23,13 @@
                 <ion-card [ngClass]="{'logoCardActive': logoActive[match.team1ID]}" (tap)="pressLogo($event, match.team1ID, match.matchID)">
                   <img [ngClass]="'img-padding'" width="150" height="150" [src]=match.team1LogoPath>
                 </ion-card>
+                <div [ngClass]="'score-label'">{{match.points}}</div>
               </ion-col>
               <ion-col>
                 <ion-card [ngClass]="{'logoCardActive': logoActive[match.team2ID]}" (tap)="pressLogo($event, match.team2ID, match.matchID)">
                   <img [ngClass]="'img-padding'" width="150" height="150" [src]=match.team2LogoPath>
                 </ion-card>
+                <div [ngClass]="'score-label'">{{match.points}}</div>
               </ion-col>
             </ion-row>
           </ion-card-header>

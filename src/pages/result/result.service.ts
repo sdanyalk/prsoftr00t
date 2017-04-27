@@ -19,7 +19,7 @@ export class MatchService {
             console.log('gameBaseUrl in getAll()', gameBaseUrl);
             return this.http
                 .get(`${gameBaseUrl}/nextMatch`)
-                //.get('./assets/data/nextmatch.json')
+                // .get('./assets/data/nextmatch.json')
                 .map(this.mapMatchData)
                 .catch(this.handleError)
         })
