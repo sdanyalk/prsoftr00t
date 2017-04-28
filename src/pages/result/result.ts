@@ -18,7 +18,7 @@ import { MatchService } from './result.service';
 export class ResultPage {
     private matchData: Match[] = [];
     private winningTeam: any[] = [];
-    private winner: Winner = { token: '', matchID: -1, winningTeamID: -1 };
+    private winner: Winner = { token: '', matchID: -1, winningTeamID: -1, points: -1 };
     private errorMessage: string;
     private loading: Loading;
     private logoActive: boolean[] = [false];
@@ -53,11 +53,13 @@ export class ResultPage {
             () => this.loading.dismiss())
     }
 
-    save(matchID: number) {
+    save(matchID: number, matchPoints: number) {
         console.log('winningTeam', this.winningTeam[matchID]);
+        console.log('matchPoints', matchPoints);
 
         this.winner.matchID = matchID;
         this.winner.winningTeamID = this.winningTeam[matchID];
+        this.winner.points = matchPoints;
 
         this.presentLoading();
         this._matchService.save(this.winner)

@@ -14,6 +14,7 @@ export class ConfigPage {
     private gameUrl: string;
     private adminUrl: string;
     private token: string;
+    private errorMessage: string;
 
     constructor(
         public navCtrl: NavController,
@@ -43,10 +44,29 @@ export class ConfigPage {
         this.showSuccessAlert();
     }
 
+    mpga() {
+        this._configService.mpga().subscribe(
+            data => { this.showSuccessAlert(), console.log(data) },
+            error => {
+                this.errorMessage = <any>error,
+                    this.showErrorAlert()
+            }
+        );
+    }
+
     private showSuccessAlert() {
         let alert = this.alertCtrl.create({
             title: 'Success!',
             subTitle: 'All is good, now you can move on with your life.',
+            buttons: ['OK']
+        });
+        alert.present();
+    }
+
+    showErrorAlert() {
+        let alert = this.alertCtrl.create({
+            title: 'Error!',
+            subTitle: 'It isnt my fault! G moo backend crapped out. Trust me.',
             buttons: ['OK']
         });
         alert.present();
